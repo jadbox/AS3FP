@@ -11,7 +11,9 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
 	import util.fp.*;
+	import util.fp.xml.*;
 	import util.fp.lambda.*;
 	/**
 	 * Collection of tests for the AS3FP
@@ -31,7 +33,11 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
-			
+			lambdaTest(); // String Lambdas
+			xmlParsing();
+		}
+		
+		private function lambdaTest():void {
 			var data:Array = [1,2,3,4,5];
 			var data1:Array = lambdaMap(data, "+", 3);
 			trace(data1); // 4,5,6,7,8
@@ -53,17 +59,36 @@ package
 			
 			data1 = lambdaFilter(data, "<=", 3); //lambdaFilter <= 3: 1,2,3
 			trace("lambdaFilter <= 3:", data1);
-			
-			//data1 = KT(data).K("+", 1);
-			//trace('K("+1")', data1);
-			//'[(x%3="fizz") + (x%5="buzz") | 1..100]'
-			trace(prope("2"));
 		}
 		
+		private function xmlParsing():void {
+			var raw:String = "<xml><game>Starcraft</game><game>Diablo</game><game>Warcraft</game></xml>";
+			var data:XML = new XML(raw);
+			
+			var result:Array = xmlMap(data.game, mapXMLData);
+			trace("xmlMap:", result); //xmlMap:  Game:Starcraft, Game:Diablo, Game:Warcraft
+			
+			xmlMap(data.game, mapXMLSprites).map(listCall(addChild));
+		}
+		
+		private function mapXMLData(node:XML, index:int, xml:XMLList):String {
+			return " Game:" + node.toString();
+		}
+		
+		private function mapXMLSprites(node:XML, index:int, xml:XMLList):TextField {
+			var field:TextField = new TextField();
+			field.text = " Game:" + node.toString();
+			field.y += index * field.textHeight;
+			return field;
+		}
+		/* WIP! Look away!
 		private var prope:Function = Guard(0, "==", 3, function(val:int):String {
 			return "success";
 		});
-		
+		*/
+		//data1 = KT(data).K("+", 1);
+		//trace('K("+1")', data1);
+		//'[(x%3="fizz") + (x%5="buzz") | 1..100]'
 	}
 	
 }
