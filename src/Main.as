@@ -68,13 +68,14 @@ package
 			var result:Array = xmlMap(data.game, mapXMLData);
 			trace("xmlMap:", result); //xmlMap:  Game:Starcraft, Game:Diablo, Game:Warcraft
 			
-			xmlMap(data.game, mapXMLSprites).map(listCall(addChild));
+			// maps over each data.game element and transforms it into an Array of TextFields... then for each TextField calls addChild on the container.
+			xmlMap(data.game, mapXMLSprites).forEach(listCall(addChild));
 		}
-		
+		// Used to transform an XML element into a constructed 
 		private function mapXMLData(node:XML, index:int, xml:XMLList):String {
 			return " Game:" + node.toString();
 		}
-		
+		// Used to transform an XML element into a TextField	
 		private function mapXMLSprites(node:XML, index:int, xml:XMLList):TextField {
 			var field:TextField = new TextField();
 			field.text = " Game:" + node.toString();
