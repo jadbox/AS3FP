@@ -2,6 +2,7 @@ This library is a collection of functional idioms for ActionScript 3 based on Ha
 
 Examples:
 
+String Lambdas
     private function lambdaTest():void {
         var data:Array = [1,2,3,4,5];
         var data1:Array = lambdaMap(data, "+", 3);
@@ -33,7 +34,7 @@ Examples:
         //lambdaFilter <= 3: 1,2,3
         trace("lambdaFilter <= 3:", data1);
     }
-    //===============
+XML Comprehensions
     private function xmlParsing():void {
         var raw:String = "<xml><game>Starcraft</game><game>Diablo</game><game>Warcraft</game></xml>";
         var data:XML = new XML(raw);
