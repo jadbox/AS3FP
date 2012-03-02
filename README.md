@@ -1,0 +1,1 @@
+This library is a collection of functional idioms for ActionScript 3 based on Haskell and Coffeescript.
